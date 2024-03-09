@@ -45,8 +45,49 @@ h3{
     margin-top: 0.5rem;
     color: white;
   }
-  .custom-radio:focus:not(:checked)+label::before {
-    border-color: red;}
+  label {
+    display: inline-block;
+    width: 5vw;
+    height: 5vw;
+    border-radius: 50%;
+
+}
+
+label:before {
+    content: "";
+    position: absolute;
+    width: 3vw;
+    height: 3vw;
+    background: white;
+    border-radius: 50%;
+    /* box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0; */
+
+}
+
+label:after {
+    content: "";
+    position: absolute;
+    width: 5vw;
+    height: 5vw;
+    background: rgba(255, 255, 255, .5);
+    border-radius: 50%;
+  
+}
+.radio:checked + label:after {
+    background: transparent;
+  
+}
+
+#radio-1 + label {
+    background: #4285F4;
+   
+}
+#radio-1 + label:before {
+    transform: scale(0);
+}
+#radio-1:checked + label:before {
+    transform: scale(1);
+}
 
 
   
