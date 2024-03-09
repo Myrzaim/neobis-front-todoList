@@ -88,6 +88,9 @@ label:after {
 #radio-1:checked + label:before {
     transform: scale(1);
 }
+.lined {
+  text-decoration: line-through;
+}
 
 
   

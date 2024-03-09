@@ -20,7 +20,8 @@ addBtn.addEventListener("click", (e) => {
   let newObj = {
     id: Date.now(),
     title: titleInp.value,
-    category: isChecked.id,
+    category: isChecked.name,
+    done: false,
   };
   db.push(newObj);
 
@@ -35,16 +36,19 @@ function render() {
   list.innerHTML = "";
   db.forEach((item) => {
     list.innerHTML += `<li id="${item.id}">
-      <input type="radio" id=${item.category} id="checkbox" />
-      <input type="text" value="${item.title}" id="update-todo" readonly/>
+      <input type="radio" name=${item.category} id="checkbox_${
+      item.id
+    }" onChange = isDone(${item.id}) />
+      <input type="text" class="${item.done ? "lined" : ""}" value="${
+      item.title
+    }" 
+        id="update_todo_${item.id}" onChange=inpChange(${item.id}) readonly/>
      <button id = "del-btn">Delete</button>;
-        <button id = "upd-btn">Update</button></li>`;
+        <button class ="upd-btn" id="${item.id}">Update</button></li>`;
   });
 
   addDeleteEvent();
-  // addUpdateEvent();
-  // console.log(db);
-  // isDone();
+  addUpdateEvent();
 }
 
 function deleteProduct(e) {
@@ -59,21 +63,35 @@ function addDeleteEvent() {
   delBtns.forEach((item) => item.addEventListener("click", deleteProduct));
 }
 
-// function isDone() {
-//   let done = document.getElementById(checkbox);
-//   consolelog(done);
-// }
+function addUpdateEvent() {
+  let updBtns = document.querySelectorAll(".upd-btn");
+  console.log("here");
+  updBtns.forEach((item) =>
+    item.addEventListener("click", () => enableTitleInput(item.id))
+  );
+}
 
-// function updateTitle(e) {
-//   let titleList = document.getElementById("#update-todo");
-//   let productId = e.target.parentNode.id;
-//   console.log(e);
-//   console.log(titleList.value);
-//   let product = db.find((item) => item.id == productId);
-//   product.title = titleList.value;
-// }
+function enableTitleInput(id) {
+  let elementId = "update_todo_" + id;
+  console.log(elementId);
+  let titleInput = document.getElementById(elementId);
+  titleInput.removeAttribute("readonly");
+  titleInput.focus();
+}
 
-// function addUpdateEvent() {
-//   let updBtns = document.querySelectorAll("#upd-btn");
-//   updBtns.forEach((item) => item.addEventListener("click", updateTitle));
-// }
+function inpChange(itemId) {
+  let inp = document.getElementById("update_todo_" + itemId);
+  let inpValue = inp.value;
+  let product = db.find((item) => item.id == itemId);
+  product.title = inpValue;
+}
+
+function isDone(itemId) {
+  let inp = document.getElementById("update_todo_" + itemId);
+  let checkBox = document.getElementById("checkbox_" + itemId);
+  console.log(inp);
+  if (checkBox.checked) {
+    inp.setAttribute("class", "lined");
+  }
+  inp.removeAttribute("class", "lined");
+}
