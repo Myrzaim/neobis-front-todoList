@@ -2,6 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Serif+Text:ital@0;1&family=Madimi+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
@@ -10,26 +16,41 @@
   <body>
     <div class="toDo">
       <h3>Whats'up,</h3>
-      <input type="text" placeholder="Name here" class="name" />
-      <p>CREATE A TO DO</p>
+      <input type="text" placeholder="Name here" value="Myrzaim" class="name" />
+      <h4>CREATE A TO DO</h4>
       <p>What's on your to do list?</p>
       <form>
         <input type="text" placeholder="e.g get a milk" id="add-todo" />
         <p>Pick a category</p>
         <div class="category">
-          <div class="bussines">
-            <input type="radio" id="check-bussines" name="myCheckbox" />
+          <div class="category-box">
+            <div class="radio">
+              <input type="radio" id="check-bussines" name="myCheckbox" />
+              <label class="radio-business" for="check-bussines"></label>
+            </div>
             <p>Bussines</p>
           </div>
-          <div class="personal">
-            <input type="radio" id="check-personal" name="myCheckbox" />
+          <div class="category-box">
+            <div class="radio">
+              <input type="radio" id="check-personal" name="myCheckbox" />
+              <label class="radio-personal" for="check-personal"></label>
+            </div>
             <p>Personal</p>
           </div>
         </div>
         <button type="submit" class="add-btn">Add todo</button>
       </form>
       <h4>TODO list</h4>
-      <ul class="product-list"></ul>
+      <ul class="product-list">
+        <!-- <div class="list-box">
+          <li>
+            <input type="radio" />
+            <input class="list-title" type="text" />
+            <button class="upd-btn">Edit</button>
+            <button class="del-btn" id="del-btn">Delete</button>
+          </li>
+        </div> -->
+      </ul>
     </div>
 
     <script src="./js/main.js"></script>

@@ -20,7 +20,8 @@ addBtn.addEventListener("click", (e) => {
   let newObj = {
     id: Date.now(),
     title: titleInp.value,
-    category: isChecked.name,
+    category:
+      isChecked.parentElement.getElementsByTagName("label")[0].className,
     done: false,
   };
   db.push(newObj);
@@ -35,16 +36,27 @@ function render() {
   let list = document.querySelector(".product-list");
   list.innerHTML = "";
   db.forEach((item) => {
-    list.innerHTML += `<li id="${item.id}">
-      <input type="radio" name=${item.category} id="checkbox_${
+    list.innerHTML += `<div class="list-box">
+    <li id="${item.id}" >
+    <div class="radio raio-list">
+              <input onclick=isDone(${item.id}) name="myCheckbox_${item.id}" ${
+      item.done ? "checked" : ""
+    }
+                          type="radio"
+                          id="checkbox_${item.id}" 
+                          onchange = isDone(${item.id}) />
+              <label class="${item.category}" for="checkbox_${
       item.id
-    }" onChange = isDone(${item.id}) />
-      <input type="text" class="${item.done ? "lined" : ""}" value="${
-      item.title
-    }" 
+    }" ></label>
+            </div>
+
+
+      <input type="text" class="list-title ${
+        item.done ? "lined" : ""
+      }" value="${item.title}" 
         id="update_todo_${item.id}" onChange=inpChange(${item.id}) readonly/>
-     <button id = "del-btn">Delete</button>;
-        <button class ="upd-btn" id="${item.id}">Update</button></li>`;
+        <button class ="upd-btn" id="${item.id}">Edit</button>
+        <button class = "del-btn">Delete</button></li> </div>`;
   });
 
   addDeleteEvent();
@@ -59,7 +71,7 @@ function deleteProduct(e) {
 }
 
 function addDeleteEvent() {
-  let delBtns = document.querySelectorAll("#del-btn");
+  let delBtns = document.querySelectorAll(".del-btn");
   delBtns.forEach((item) => item.addEventListener("click", deleteProduct));
 }
 
@@ -89,9 +101,12 @@ function inpChange(itemId) {
 function isDone(itemId) {
   let inp = document.getElementById("update_todo_" + itemId);
   let checkBox = document.getElementById("checkbox_" + itemId);
-  console.log(inp);
   if (checkBox.checked) {
-    inp.setAttribute("class", "lined");
+    inp.classList.add("lined");
+  } else {
+    inp.classList.remove("lined");
+    checkBox.checked = false;
   }
-  inp.removeAttribute("class", "lined");
+  let product = db.find((item) => item.id == itemId);
+  product.done = checkBox.checked;
 }
